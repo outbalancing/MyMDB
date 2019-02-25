@@ -14,8 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls import handler404, handler500
+
+import core.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(core.urls, namespace='core')),
 ]
+
+handler404 = 'core.views.not_found'
+handler500 = 'core.views.server_error'
